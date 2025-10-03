@@ -5,7 +5,7 @@ import matplotlib
 matplotlib.use("TkAgg")
 import matplotlib.pyplot as plt
 
-# Inicializar câmera
+# Inicializar câmera e reproduz o vídeo na tela
 picam2 = Picamera2()
 picam2.configure(picam2.create_preview_configuration(main={"size": (640, 480)}))
 picam2.start()
