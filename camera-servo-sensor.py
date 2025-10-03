@@ -4,11 +4,9 @@ import busio
 from adafruit_pca9685 import PCA9685
 import mediapipe as mp
 from picamera2 import Picamera2
-import cv2  # só para manipulação de frames, sem imshow
+import cv2  # para manipulação de frames, sem imshow
 
-# ---------------------------
 # Sensor ultrassônico
-# ---------------------------
 TRIG = 27
 ECHO = 17
 
@@ -32,10 +30,8 @@ def get_distance():
     distance = pulse_duration * 34300 / 2
     return distance
 
-# ---------------------------
 
 # PCA9685
-# ---------------------------
 i2c = busio.I2C(board.SCL, board.SDA)
 pca = PCA9685(i2c)
 pca.frequency = 50
@@ -44,14 +40,11 @@ def set_servo_angle(channel, angle):
     pulse = int(150 + (angle / 180.0) * (600 - 150))
     pca.channels[channel].duty_cycle = pulse << 4
 
-# ---------------------------
 # Mediapipe
-# ---------------------------
 mp_face = mp.solutions.face_detection
 face_detection = mp_face.FaceDetection(min_detection_confidence=0.2)
 
-# ---------------------------
-# Picamera2# ---------------------------
+# Picamera2
 picam2 = Picamera2()
 config = picam2.create_preview_configuration(main={"size": (640, 480)})
 picam2.configure(config)
@@ -61,9 +54,7 @@ time.sleep(1)
 frame_count = 0
 processar_cada = 1  # processa 1 frame a cada N frames
 
-# ---------------------------
 # Loop principal
-# ---------------------------
 try:
     while True:
         dist = get_distance()
